@@ -1,8 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render
 
 def index(request):
-    return HttpResponse('Hi! I''m ducking work! <br/><a href = "./about/">About</a>')
+    context_dict = \
+        {'boldmessage': "I'm ducking bold!",
+         }
+
+    return render(request, 'rango/index.html', context_dict)
 
 def about(request):
-    return HttpResponse('Hi! It''s ducking about! <br/><a href = "../">Go home</a>')
+    return  render(request, 'rango/about.html')
