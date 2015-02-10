@@ -9,8 +9,12 @@
   </head>
   <body>
     <div>
-        <a href="/rango/register/">Register Here</a> <br/>
+        <a href="/auth/register/">Register Here</a> <br/>
+        {% if user.is_authenticated  %}
+        <h1>Rango says... Hello {{user.username}}</h1>
+        {% else %}
         <h1>Rango says... May the Duck be with you!</h1>
+        {% endif %}
         {% if categories_likes %}
           <h2>MOst liked categories</h2>
           <ul>
