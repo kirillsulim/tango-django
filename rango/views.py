@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 from rango.models import Page, Category
 from rango.forms import CategoryForm, PageForm
@@ -36,7 +37,7 @@ def category(request, category_name_slug):
 def about(request):
     return  render(request, 'rango/about.html')
 
-
+@login_required
 def add_category(request):
     if request.method == "POST":
         form = CategoryForm(request.POST)
@@ -50,7 +51,7 @@ def add_category(request):
 
     return render(request, "rango/add_category.html", {"form": form})
 
-
+@login_required
 def add_page(request, category_name_slug):
     try:
         cat = Category.objects.get(slug=category_name_slug)
@@ -74,4 +75,8 @@ def add_page(request, category_name_slug):
         form = PageForm()
 
     return render(request, "rango/add_page.html", {"form": form, "category": cat, })
+
+@login_required
+def restricted(request):
+    return HttpResponse("Since you're logged in, you can see this text!")
 

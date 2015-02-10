@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as dj_login
+from django.contrib.auth import logout as dj_logout
+from django.contrib.auth.decorators import login_required
 
 from auth.forms import UserProfileForm, UserForm
 
@@ -52,9 +54,15 @@ def login(request):
             return HttpResponseRedirect('/rango/')
         else:
             print("Invalid login details: {0}, {1}".format(username, password))
-            return HttpResponseRedirect('/auth/login_error/')
+            return render(request, 'auth/login.html', {'error': username})
     else:
         return render(request, 'auth/login.html', {})
+
+
+@login_required
+def logout(request):
+    dj_logout(request)
+    return HttpResponseRedirect('/rango/')
 
 
 
